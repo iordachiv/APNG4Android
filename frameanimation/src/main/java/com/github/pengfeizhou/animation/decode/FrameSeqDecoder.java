@@ -122,6 +122,10 @@ public abstract class FrameSeqDecoder<R extends Reader, W extends Writer> {
         }
     }
 
+    public int getAnimationFrameNumber() {
+        return frames.size();
+    }
+
     /**
      * 解码器的渲染回调
      */

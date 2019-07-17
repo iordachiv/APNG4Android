@@ -31,7 +31,7 @@ import java.util.Set;
 public abstract class FrameAnimationDrawable extends Drawable implements Animatable2Compat, FrameSeqDecoder.RenderListener {
     private static final String TAG = FrameAnimationDrawable.class.getSimpleName();
     private final Paint paint = new Paint();
-    private final FrameSeqDecoder frameSeqDecoder;
+    protected final FrameSeqDecoder frameSeqDecoder;
     private DrawFilter drawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     private Matrix matrix = new Matrix();
     private Set<AnimationCallback> animationCallbacks = new HashSet<>();
@@ -65,6 +65,13 @@ public abstract class FrameAnimationDrawable extends Drawable implements Animata
     public FrameAnimationDrawable(Loader provider) {
         paint.setAntiAlias(true);
         frameSeqDecoder = createFrameSeqDecoder(provider, this);
+    }
+
+    public int getFrameNumber() {
+        if (frameSeqDecoder != null) {
+            return frameSeqDecoder.getAnimationFrameNumber();
+        }
+        return 0;
     }
 
     protected abstract FrameSeqDecoder createFrameSeqDecoder(Loader streamLoader, FrameSeqDecoder.RenderListener listener);
