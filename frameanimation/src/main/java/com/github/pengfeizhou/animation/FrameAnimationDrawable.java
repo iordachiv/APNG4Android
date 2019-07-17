@@ -119,9 +119,27 @@ public abstract class FrameAnimationDrawable extends Drawable implements Animata
         }
     }
 
+    private void showOnlyFirstFrame() {
+        frameSeqDecoder.showOnlyFirstFrame();
+    }
+
     @Override
     public boolean isRunning() {
         return frameSeqDecoder.isRunning();
+    }
+
+    public void startAnimation() {
+        reset();
+        start();
+    }
+
+    public void stopAnimation() {
+        stop();
+        showOnlyFirstFrame();
+    }
+
+    public boolean isAnimationPlayed() {
+        return frameSeqDecoder.isAnimationPlayed();
     }
 
     @Override

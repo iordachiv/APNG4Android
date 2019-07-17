@@ -41,6 +41,7 @@ public abstract class FrameSeqDecoder<R extends Reader, W extends Writer> {
     private Integer loopLimit = null;
     private final RenderListener renderListener;
     private boolean paused;
+    private boolean renderOnlyFirstFrame = true;
     private static final Rect RECT_EMPTY = new Rect();
     private Runnable renderTask = new Runnable() {
         @Override
@@ -289,7 +290,13 @@ public abstract class FrameSeqDecoder<R extends Reader, W extends Writer> {
     }
 
     private int getFrameCount() {
+        if(renderOnlyFirstFrame) return 1;
         return this.frames.size();
+    }
+
+    public void showOnlyFirstFrame() {
+        renderOnlyFirstFrame = true;
+        start();
     }
 
     /**
@@ -364,6 +371,10 @@ public abstract class FrameSeqDecoder<R extends Reader, W extends Writer> {
         return mState == State.RUNNING || mState == State.INITIALIZING;
     }
 
+    public boolean isAnimationPlayed() {
+        return isRunning() && !renderOnlyFirstFrame;
+    }
+
     public boolean isPaused() {
         return paused;
     }
@@ -376,6 +387,7 @@ public abstract class FrameSeqDecoder<R extends Reader, W extends Writer> {
         this.playCount = 0;
         this.frameIndex = -1;
         this.finished = false;
+        this.renderOnlyFirstFrame = false;
     }
 
     public void pause() {
