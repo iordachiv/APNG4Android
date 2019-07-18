@@ -74,6 +74,13 @@ public abstract class FrameAnimationDrawable extends Drawable implements Animata
         return 0;
     }
 
+    public int getAnimationDuration() {
+        if (frameSeqDecoder != null) {
+            return frameSeqDecoder.getAnimationDuration();
+        }
+        return 0;
+    }
+
     protected abstract FrameSeqDecoder createFrameSeqDecoder(Loader streamLoader, FrameSeqDecoder.RenderListener listener);
 
     /**

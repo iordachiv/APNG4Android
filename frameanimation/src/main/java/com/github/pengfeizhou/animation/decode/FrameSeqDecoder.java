@@ -127,6 +127,16 @@ public abstract class FrameSeqDecoder<R extends Reader, W extends Writer> {
         return frames.size();
     }
 
+    public int getAnimationDuration() {
+        int duration = 0;
+        if(frames != null && frames.size() > 1) {
+            for (Frame frame : frames) {
+                duration += frame.frameDuration;
+            }
+        }
+        return duration;
+    }
+
     /**
      * 解码器的渲染回调
      */
